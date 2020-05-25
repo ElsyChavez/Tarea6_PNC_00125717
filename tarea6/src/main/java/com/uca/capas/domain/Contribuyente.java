@@ -39,9 +39,9 @@ public class Contribuyente {
 	@Column(name = "s_apellido")
 	private String Apellido;
 	
-	@Pattern(regexp = "^[0-9]{14}$", message = "El NIT debe tener exactamente ")
+	@Pattern(regexp = "^[0-9]{14}$", message = "El NIT debe tener exactamente 14 digitos")
 	@NotEmpty(message ="Este campo no puede estar vacio.")
-	@Column(name = "s_apellido")
+	@Column(name = "s_nit")
 	private String nit;
 	
 	@Column(name = "f_fecha_ingreso")

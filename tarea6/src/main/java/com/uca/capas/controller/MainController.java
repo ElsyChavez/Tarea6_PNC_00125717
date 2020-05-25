@@ -1,8 +1,21 @@
 package com.uca.capas.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.uca.capas.domain.Contribuyente;
+import com.uca.capas.domain.Importancia;
 import com.uca.capas.service.ContribuyenteService;
 import com.uca.capas.service.ImportanciaService;
 
@@ -10,9 +23,77 @@ import com.uca.capas.service.ImportanciaService;
 public class MainController {
 	
 	@Autowired
-	ContribuyenteService contribuyenteService;
+	ImportanciaService importanciaService;
 	
 	@Autowired
-	ImportanciaService importanciaService;
+	ContribuyenteService contribuyenteService;
+	
+	@RequestMapping("/inicio")
+	public ModelAndView inicio() {
+		ModelAndView mav = new ModelAndView();
+		List<Importancia> importancias = null;
+		Contribuyente contribuyente = new Contribuyente();
+		
+		try{
+			importancias = importanciaService.findAll();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		mav.addObject("contribuyente", contribuyente);
+		mav.addObject("importancias", importancias);
+		mav.setViewName("index");
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping("/mostrarContribuyentes")
+	public ModelAndView mostrarContribuyentes() {
+		ModelAndView mav = new ModelAndView();
+		List<Contribuyente> contribuyentes = null;
+		
+		try{
+			contribuyentes = contribuyenteService.findAll();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		mav.addObject("contribuyentes", contribuyentes);
+		mav.setViewName("listado");
+		
+		return mav;
+		
+	}
+	
+	@PostMapping("/insertarContribuyente")
+	public ModelAndView insertarContribuyente(@Valid @ModelAttribute Contribuyente contribuyente, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(result.hasErrors()) {
+			List <Importancia> importancias = null;
+			try{
+				importancias = importanciaService.findAll();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate fechaActual = LocalDate.now();
+			String fechaI = dtf.format(fechaActual);
+		    System.out.println(fechaI); 
+			
+			mav.addObject("f_fecha_ingreso", fechaI);
+			mav.addObject("contribuyente", contribuyente);
+			mav.addObject("importancias", importancias);
+			mav.setViewName("index");
+		}
+		else {
+			contribuyenteService.insert(contribuyente);
+			mav.setViewName("exito");
+		}
+		
+		return mav;
+	}
 
 }

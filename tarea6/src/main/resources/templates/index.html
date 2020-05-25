@@ -9,5 +9,43 @@
 
 	<h1>Ingresar contribuyente</h1>
 	
+		<form th:action="@{/insertarContribuyente}" th:object="${contribuyente}" method="post">
+	
+			<select th:field = "*{importancia.codigoImportancia}">
+				<option th:each = "importancia, row:${importancias" 
+				th:value = "${importancia.codigoImportancia}" th:text = "${importancia.sImportancia}">
+				</option>
+			</select>
+			
+			<br><br>
+	
+			<label>Nombre del contribuyente: </label>
+			<input type="text"  th:field="*{nombre}"><br>
+			<span th:errors = "*{nombre}" style = "color: #E81505;"></span>
+		
+			<br><br>
+		
+			<label>Apellido del contribuyente: </label>
+			<input type="text" th:field="*{apellido}"><br>
+			<span th:errors = "*{apellido}" style = "color: #E81505;"></span>
+
+			<br><br>
+
+			<label>NIT: </label>
+			<input type="text" th:field="*{nit}"><br>
+			<span th:errors = "*{nit}" style = "color: #E81505;"></span>
+		
+			<br><br>
+		
+			<input type="submit" value="Guardar">
+			
+	</form>
+	
+	<form th:action="@{/mostrarContribuyentes}">
+	
+    	<input type="submit" value="Ver contribuyentes">
+    	
+	</form>
+	
 </body>
 </html>

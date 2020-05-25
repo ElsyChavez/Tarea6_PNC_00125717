@@ -17,7 +17,7 @@ public class Importancia {
 	@Column(name = "c_importancia")
 	private Integer codigoImportancia;
 	
-	@Column(name = "s_imprtancia")
+	@Column(name = "s_importancia")
 	private String sImportancia;
 	
 	@OneToMany(mappedBy = "importancia", fetch = FetchType.EAGER)
