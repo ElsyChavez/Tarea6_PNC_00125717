@@ -10,7 +10,7 @@ import com.uca.capas.dao.ImportanciaDAO;
 import com.uca.capas.domain.Importancia;
 
 @Service
-public class ImportanciaServiceImpl implements ImportanciaDAO {
+public class ImportanciaServiceImpl implements ImportanciaService {
 	
 	@Autowired
 	ImportanciaDAO importanciaDAO;

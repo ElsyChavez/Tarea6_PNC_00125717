@@ -12,7 +12,7 @@
 		<form th:action="@{/insertarContribuyente}" th:object="${contribuyente}" method="post">
 	
 			<select th:field = "*{importancia.codigoImportancia}">
-				<option th:each = "importancia, row:${importancias" 
+				<option th:each = "importancia, row:${importancias}" 
 				th:value = "${importancia.codigoImportancia}" th:text = "${importancia.sImportancia}">
 				</option>
 			</select>
